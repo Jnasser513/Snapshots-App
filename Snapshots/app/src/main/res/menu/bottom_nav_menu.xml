@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_home"
+        android:title="@string/home_tittle"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_home"/>
+
+    <item
+        android:id="@+id/action_home_add"
+        android:title="@string/home_add"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_photo"/>
+
+    <item
+        android:id="@+id/action_home_profile"
+        android:title="@string/home_profile"
+        app:showAsAction="never"
+        android:icon="@drawable/ic_account"/>
 
 </menu>
