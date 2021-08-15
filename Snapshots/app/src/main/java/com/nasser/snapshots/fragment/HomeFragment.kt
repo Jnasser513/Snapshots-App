@@ -65,6 +65,7 @@ class HomeFragment : Fragment() {
                         .centerCrop()
                         .into(binding.imagePhoto)
                 }
+                
             }
 
             override fun onDataChanged() {
