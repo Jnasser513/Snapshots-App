@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -22,7 +23,9 @@ import com.nasser.snapshots.entity.Snapshots
 class HomeFragment : Fragment() {
 
     private lateinit var mBinding: FragmentHomeBinding
+
     private lateinit var mFirebaseAdapter: FirebaseRecyclerAdapter<Snapshots, SnapshotHolder>
+    private lateinit var mLayoutManager: RecyclerView.LayoutManager
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +38,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Rama snapshots en la base de datos de firebase
         val query = FirebaseDatabase.getInstance().reference.child("snapshots")
 
         val options = FirebaseRecyclerOptions.Builder<Snapshots>()
@@ -79,6 +83,24 @@ class HomeFragment : Fragment() {
                 Toast.makeText(mContext, error.message, Toast.LENGTH_SHORT).show()
             }
         }
+
+        mLayoutManager = LinearLayoutManager(context)
+
+        mBinding.recylerView.apply {
+            setHasFixedSize(true)
+            layoutManager = mLayoutManager
+            adapter = mFirebaseAdapter
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mFirebaseAdapter.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mFirebaseAdapter.stopListening()
     }
 
     //Configuramos el viewholder del recyclerview en el fragmmento gracias a la libreria de firebase ui
